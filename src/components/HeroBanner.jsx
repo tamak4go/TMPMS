@@ -12,7 +12,7 @@ const slides = [
     bg: "linear-gradient(to right, rgba(6,46,36,0.82) 0%, rgba(6,78,59,0.4) 60%, rgba(0,0,0,0.1) 100%), url('/images/hero_banner_1.png') center/cover no-repeat",
     tag: '🌿 Tinh Hoa Dược Liệu',
     label: 'Thảo Dược Cổ Truyền\nViệt Nam',
-    sub: 'TCMPAM chắt lọc tinh hoa từ nguồn thảo dược thiên nhiên sạch, an toàn — chuẩn GMP-WHO',
+    sub: 'TMPMS chắt lọc tinh hoa từ nguồn thảo dược thiên nhiên sạch, an toàn — chuẩn GMP-WHO',
     btn: 'Khám phá ngay',
     btnColor: '#fff',
     btnBg: 'linear-gradient(135deg,#059669,#047857)',

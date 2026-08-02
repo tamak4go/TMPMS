@@ -910,3 +910,40 @@
   background: #0f766e;
 }
 
+
+/* ============ PRESCRIPTION (RX) CART GROUP ============ */
+.cart-rx-group {
+  margin-top: 6px;
+}
+
+.cart-rx-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #fff7ed, #ffedd5);
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+}
+
+.cart-rx-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: #9a3412;
+}
+
+.cart-rx-note {
+  font-size: 11px;
+  color: #c2410c;
+}
+
+.cart-item-card:has(.cart-rx-badge) .qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

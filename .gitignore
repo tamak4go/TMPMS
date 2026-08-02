@@ -1,5 +1,34 @@
+# ==============================================================================
+# CẢNH BÁO: KHÔNG SAO CHÉP THỦ CÔNG CÁC THƯ MỤC backend/ HOẶC database/ QUA LẠI 
+# GIỮA CÁC DỰ ÁN FE VÀ BE NỮA! HỆ THỐNG ĐÃ ĐƯỢC CHUẨN HÓA VỚI backend .NET RIÊNG.
+# ==============================================================================
+
+# Node / Frontend Build & Dependencies
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+
+# .NET / Backend Build & Outputs
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.pdb
+*.winmd
+*.user
+*.suo
+.vs/
+
+# JetBrains / VS Code
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,32 +36,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# C# Build and VS files
-[Bb]in/
-[Oo]bj/
-.vs/
-*.user
-appsettings.Development.json
-
-# Large binary files
-backend/postgrest.exe
-
-# Sensitive config files
+# Sensitive Configuration Files
 appsettings.json
-backend/appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+appsettings.local.json
+launchSettings.json

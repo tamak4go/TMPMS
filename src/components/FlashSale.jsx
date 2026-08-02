@@ -6,12 +6,12 @@ import 'swiper/css/navigation';
 import './FlashSale.css';
 
 const FLASH_PRODUCTS = [
-  { id: 1, name: 'Cao Ho Bổ Phế Nam Hà chỉ khái lộ (Hộp 125ml)', price: 42000, oldPrice: 55000, unit: 'Chai', discount: 23, origin: 'Việt Nam', originColor: '#10b981', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=200&h=200&fit=crop&auto=format' },
-  { id: 2, name: 'Tinh Dầu Tràm Trà Bảo Linh phòng ho, giữ ấm (Lọ 10ml)', price: 75000, oldPrice: 95000, unit: 'Lọ', discount: 21, origin: 'Việt Nam', originColor: '#10b981', image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=200&h=200&fit=crop&auto=format' },
-  { id: 3, name: 'Dầu Phật Linh Trường Sơn giữ ấm cơ thể (Chai 5ml)', price: 15000, oldPrice: 20000, unit: 'Chai', discount: 25, origin: 'Việt Nam', originColor: '#10b981', image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=200&h=200&fit=crop&auto=format' },
-  { id: 4, name: 'Viên Sâm Nhung Linh Chi bổ khí huyết (Hộp 60 viên)', price: 280000, oldPrice: 350000, unit: 'Hộp', discount: 20, origin: 'Hàn Quốc', originColor: '#1d4ed8', image: 'https://images.unsplash.com/photo-1577401230588-3b03630f90e0?w=200&h=200&fit=crop&auto=format' },
-  { id: 5, name: 'Cao Hồng Sâm Linh Chi KGC Daedong cao cấp (Hộp 2 lọ)', price: 920000, oldPrice: 1200000, unit: 'Hộp', discount: 23, origin: 'Hàn Quốc', originColor: '#1d4ed8', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=200&h=200&fit=crop&auto=format' },
-  { id: 6, name: 'Trà Sâm Đất Vy & Tea giải nhiệt giải độc (Hộp 20 gói)', price: 165000, oldPrice: 220000, unit: 'Hộp', discount: 25, origin: 'Việt Nam', originColor: '#10b981', image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=200&h=200&fit=crop&auto=format' },
+  { id: 101, name: 'Cao Ho Bổ Phế Nam Hà chỉ khái lộ (Hộp 125ml)', price: 42000, oldPrice: 55000, unit: 'Chai', discount: 23, origin: 'Việt Nam', originColor: '#10b981', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=200&h=200&fit=crop&auto=format' },
+  { id: 206, name: 'Tinh Dầu Tràm Trà Bảo Linh phòng ho, giữ ấm (Lọ 10ml)', price: 75000, oldPrice: 95000, unit: 'Lọ', discount: 21, origin: 'Việt Nam', originColor: '#10b981', image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=200&h=200&fit=crop&auto=format' },
+  { id: 103, name: 'Dầu Phật Linh Trường Sơn giữ ấm cơ thể (Chai 5ml)', price: 15000, oldPrice: 20000, unit: 'Chai', discount: 25, origin: 'Việt Nam', originColor: '#10b981', image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=200&h=200&fit=crop&auto=format' },
+  { id: 203, name: 'Viên Sâm Nhung Linh Chi bổ khí huyết (Hộp 60 viên)', price: 280000, oldPrice: 350000, unit: 'Hộp', discount: 20, origin: 'Hàn Quốc', originColor: '#1d4ed8', image: 'https://images.unsplash.com/photo-1577401230588-3b03630f90e0?w=200&h=200&fit=crop&auto=format' },
+  { id: 204, name: 'Cao Hồng Sâm Linh Chi KGC Daedong cao cấp (Hộp 2 lọ)', price: 920000, oldPrice: 1200000, unit: 'Hộp', discount: 23, origin: 'Hàn Quốc', originColor: '#1d4ed8', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=200&h=200&fit=crop&auto=format' },
+  { id: 102, name: 'Trà Sâm Đất Vy & Tea giải nhiệt giải độc (Hộp 20 gói)', price: 165000, oldPrice: 220000, unit: 'Hộp', discount: 25, origin: 'Việt Nam', originColor: '#10b981', image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=200&h=200&fit=crop&auto=format' },
 ];
 
 const TIME_SLOTS = [
@@ -29,7 +29,7 @@ const maskPrice = (price) => {
 
 const pad = (n) => String(n).padStart(2, '0');
 
-const FlashSale = () => {
+const FlashSale = ({ onProductClick }) => {
   const [time, setTime] = useState({ h: 0, m: 7, s: 42 });
   const [activeTab, setActiveTab] = useState(0);
 
@@ -109,25 +109,40 @@ const FlashSale = () => {
                   <div className="fs-discount-badge">-{p.discount}%</div>
 
                   {/* Image */}
-                  <div className="fs-img-wrap">
+                  <div 
+                    className="fs-img-wrap"
+                    onClick={onProductClick ? () => onProductClick(p) : undefined}
+                    style={onProductClick ? { cursor: 'pointer' } : {}}
+                  >
                     <img src={p.image} alt={p.name} />
                   </div>
 
                   {/* Name */}
-                  <p className="fs-name">{p.name}</p>
+                  <p 
+                    className="fs-name"
+                    onClick={onProductClick ? () => onProductClick(p) : undefined}
+                    style={onProductClick ? { cursor: 'pointer' } : {}}
+                  >
+                    {p.name}
+                  </p>
 
                   {/* Price */}
                   <div className="fs-price-row">
-                    <span className="fs-price">{maskPrice(p.price)}</span>
+                    <span className="fs-price">{p.price != null ? `${p.price.toLocaleString('vi-VN')}đ` : 'Liên hệ'}</span>
                     <span className="fs-unit">/ {p.unit}</span>
                   </div>
-                  <div className="fs-old-price">{p.oldPrice.toLocaleString('vi-VN')}đ</div>
+                  {p.oldPrice != null && <div className="fs-old-price">{p.oldPrice.toLocaleString('vi-VN')}đ</div>}
 
                   {/* Hot deal pill */}
                   <div className="fs-hot-pill">🔥 Ưu đãi cực sốc</div>
 
                   {/* CTA */}
-                  <button className="fs-cta">Xem chi tiết</button>
+                  <button 
+                    className="fs-cta"
+                    onClick={onProductClick ? () => onProductClick(p) : undefined}
+                  >
+                    Xem chi tiết
+                  </button>
                 </div>
               </SwiperSlide>
             ))}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Header from './components/Header';
+import Header from './components/layout/Header';
 import HeroBanner from './components/HeroBanner';
 import QuickLinks from './components/QuickLinks';
 import FlashSale from './components/FlashSale';
@@ -10,25 +10,28 @@ import FeaturedCategories from './components/FeaturedCategories';
 import Brands from './components/Brands';
 import HealthNews from './components/HealthNews';
 import StorePromoBar from './components/StorePromoBar';
-import FloatingActions from './components/FloatingActions';
-import Footer from './components/Footer';
+import FloatingActions from './components/ui/FloatingActions';
+import Footer from './components/layout/Footer';
 import DongYPromoStrip from './components/DongYPromoStrip';
 import DongYSection from './components/DongYSection';
 
 // New Views
-import HistoryView from './components/HistoryView';
-import AdminView from './components/AdminView';
-import SuppliersView from './components/SuppliersView';
-import SelfDiagnosis from './components/SelfDiagnosis';
-import PatientPortal from './components/PatientPortal';
-import ProductDetailView from './components/ProductDetailView';
-import CategoryListView from './components/CategoryListView';
-import StoreFinderView from './components/StoreFinderView';
-import VaccineBookingView from './components/VaccineBookingView';
-import HealthReels from './components/HealthReels';
-import AIChatbot from './components/AIChatbot';
-import ProfileView from './components/ProfileView';
-import HealthVideoSection from './components/HealthVideoSection';
+import HistoryView from './pages/HistoryView';
+import AdminView from './pages/AdminView';
+import SuppliersView from './pages/SuppliersView';
+import SelfDiagnosis from './pages/SelfDiagnosis';
+import PatientPortal from './pages/PatientPortal';
+import ProductDetailView from './pages/ProductDetailView';
+import CategoryListView from './pages/CategoryListView';
+import StoreFinderView from './pages/StoreFinderView';
+import VaccineBookingView from './pages/VaccineBookingView';
+import HealthReels from './pages/HealthReels';
+import AIChatbot from './components/ui/AIChatbot';
+import ProfileView from './pages/ProfileView';
+import FeaturedVideosCarousel from './components/ui/FeaturedVideosCarousel';
+import HealthQuizList from './pages/HealthQuizList';
+import HealthQuizPlayer from './pages/HealthQuizPlayer';
+import PaymentResultView from './pages/PaymentResultView';
 
 import { fetchMedicines } from './services/api';
 
@@ -44,6 +47,7 @@ const mapProduct = (p) => ({
   packaging: p.packaging || 'Hộp',
   description: p.description,
   requiresPrescription: p.requires_prescription !== undefined ? p.requires_prescription : p.requiresPrescription,
+  stockQuantity: p.stockQuantity !== undefined ? p.stockQuantity : (p.stock_quantity !== undefined ? p.stock_quantity : 99),
 });
 
 const categoryNames = {
@@ -58,7 +62,11 @@ const categoryNames = {
 };
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'history' | 'admin' | 'suppliers' | 'detail'
+  const [paymentOrderCode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('payment') ? params.get('orderCode') : null;
+  });
+  const [currentPage, setCurrentPage] = useState(paymentOrderCode ? 'payment-result' : 'home');
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
   
@@ -99,6 +107,18 @@ function App() {
       loadHomeProducts();
     }
   }, [selectedCategoryId]);
+
+  // Global event listener for app navigation from AI Chatbot or Floating buttons
+  useEffect(() => {
+    const handleAppNav = (e) => {
+      if (e.detail) {
+        setCurrentPage(e.detail);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+    window.addEventListener('app-navigate', handleAppNav);
+    return () => window.removeEventListener('app-navigate', handleAppNav);
+  }, []);
 
   // Load Category Products
   useEffect(() => {
@@ -148,6 +168,8 @@ function App() {
     setSearchQuery('');
   };
 
+  const [selectedQuizCode, setSelectedQuizCode] = useState(null);
+
   const renderContent = () => {
     switch (currentPage) {
       case 'history':
@@ -164,12 +186,32 @@ function App() {
         return <HealthReels onBack={() => handleNavigate('home')} />;
       case 'diagnose':
         return <SelfDiagnosis onBack={() => handleNavigate('home')} />;
+      case 'health-quiz':
+        return (
+          <HealthQuizList 
+            onSelectQuiz={(code) => {
+              setSelectedQuizCode(code);
+              handleNavigate('health-quiz-player');
+            }} 
+            onBack={() => handleNavigate('home')} 
+          />
+        );
+      case 'health-quiz-player':
+        return (
+          <HealthQuizPlayer 
+            quizCode={selectedQuizCode || 'cardio-risk'} 
+            onBack={() => handleNavigate('health-quiz')}
+            onNavigateBooking={() => handleNavigate('patient-portal')}
+          />
+        );
       case 'patient-portal':
         return <PatientPortal onBack={() => handleNavigate('home')} />;
       case 'profile':
         return <ProfileView onNavigate={handleNavigate} />;
       case 'detail':
         return <ProductDetailView product={selectedProduct} onBack={() => handleNavigate('home')} />;
+      case 'payment-result':
+        return <PaymentResultView orderCode={paymentOrderCode} onNavigate={handleNavigate} />;
       case 'home':
       default:
         if (isSearching) {
@@ -202,7 +244,7 @@ function App() {
             <HeroBanner />
             <DongYPromoStrip />
             <QuickLinks onNavigate={handleNavigate} />
-            <FlashSale />
+            <FlashSale onProductClick={handleSelectProduct} />
             <PromoBanners />
             {loading ? (
               <div style={{ textAlign: 'center', padding: '40px 0', fontSize: '18px', color: 'var(--text-color)' }}>
@@ -212,14 +254,14 @@ function App() {
               <>
                 <ProductSection title="🌿 Thuốc Đông Y Bán Chạy" products={bestSellers} onProductClick={handleSelectProduct} />
                 <FeaturedCategories />
-                <DongYSection />
+                <DongYSection onProductClick={handleSelectProduct} />
                 <ProductSection title="🍃 Thảo Dược & Cao Dược Liệu" products={supplements} onProductClick={handleSelectProduct} />
               </>
             )}
-            <HealthVideoSection onNavigate={handleNavigate} />
+            <FeaturedVideosCarousel onNavigate={handleNavigate} />
             <Brands />
             <HealthNews />
-            <StorePromoBar />
+            <StorePromoBar onNavigate={handleNavigate} />
           </>
         );
     }

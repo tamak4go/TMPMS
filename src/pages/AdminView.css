@@ -1,0 +1,1118 @@
+/* ============================================================
+   CLINIC & MANAGEMENT DASHBOARD SYSTEM
+   ============================================================ */
+
+.admin-container {
+  width: 1200px;
+  max-width: 100%;
+  margin: 28px auto;
+  padding: 0 16px;
+  min-height: 80vh;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1e293b;
+}
+
+/* User Role Badge Banner */
+.admin-role-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(13,148,136,0.06);
+  border: 1px dashed #0d9488;
+  color: #0f766e;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  margin-bottom: 20px;
+}
+
+.role-highlight {
+  color: #0d9488;
+  font-weight: 800;
+}
+
+/* Header & Title Section */
+.admin-header {
+  border-bottom: 1.5px solid #e2e8f0;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-title-icon {
+  color: #0d9488;
+  width: 28px;
+  height: 28px;
+}
+
+.admin-title {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0f766e;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* Navigation Tabs */
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-tab-btn {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  color: #475569;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.22s ease;
+}
+
+.admin-tab-btn:hover {
+  background: #f8fafc;
+  color: #0d9488;
+  border-color: #0d9488;
+}
+
+.admin-tab-btn.active {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(13,148,136,0.25);
+}
+
+/* Tab Cards & Contents */
+.admin-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+.card-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+}
+
+.btn-add-action {
+  background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(5,150,105,0.2);
+}
+
+.btn-add-action:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 16px rgba(5,150,105,0.3);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-lg, 14px);
+  border: 1px solid var(--color-border, #e2e8f0);
+  max-height: 70vh;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.admin-table th {
+  background-color: #f1f5f9;
+  padding: 14px 16px;
+  font-weight: 700;
+  color: #334155;
+  border-bottom: 2px solid #cbd5e1;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.admin-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  line-height: 1.4;
+  transition: background-color 0.15s ease;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f0fdfa;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.col-id {
+  font-weight: 800;
+  color: #0f766e;
+}
+
+.col-total {
+  font-weight: 800;
+  color: #b91c1c;
+}
+
+.sub-text {
+  font-size: 11.5px;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+.med-history-text {
+  max-width: 280px;
+  font-size: 12.5px;
+  color: #475569;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Table Selects & Inputs */
+.status-select {
+  border: 1.5px solid #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.15s;
+}
+
+.status-select.pending { border-color: #f97316; color: #ea580c; background-color: #fff7ed; }
+.status-select.shipping { border-color: #3b82f6; color: #2563eb; background-color: #eff6ff; }
+.status-select.delivered { border-color: #10b981; color: #059669; background-color: #ecfdf5; }
+.status-select.cancelled { border-color: #94a3b8; color: #64748b; background-color: #f1f5f9; }
+.status-select.returned { border-color: #a78bfa; color: #7c3aed; background-color: #f5f3ff; }
+.status-select.return-requested { border-color: #fbbf24; color: #d97706; background-color: #fffbeb; }
+
+.payment-toggle-btn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.payment-toggle-btn.unpaid { background-color: #fee2e2; color: #dc2626; }
+.payment-toggle-btn.paid { background-color: #d1fae5; color: #059669; }
+
+.payment-reconcile-select {
+  display: block;
+  margin-top: 6px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 11px;
+  color: #334155;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Status Badges */
+.appointment-status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.appointment-status.scheduled { background-color: #eff6ff; color: #1d4ed8; }
+.appointment-status.confirmed { background-color: #fef3c7; color: #b45309; }
+.appointment-status.completed { background-color: #ecfdf5; color: #047857; }
+.appointment-status.cancelled { background-color: #fef2f2; color: #b91c1c; }
+
+.prescription-status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.prescription-status.pending { background-color: #eff6ff; color: #1d4ed8; }
+.prescription-status.approved { background-color: #fef3c7; color: #b45309; }
+.prescription-status.fulfilled { background-color: #ecfdf5; color: #047857; }
+.prescription-status.rejected { background-color: #fef2f2; color: #b91c1c; }
+
+/* Actions Column */
+.table-actions-row {
+  display: flex;
+  gap: 6px;
+}
+
+.action-icon-btn {
+  background: none;
+  border: 1.5px solid #e2e8f0;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.15s;
+}
+
+.action-icon-btn:hover { background-color: #f8fafc; }
+.action-icon-btn.edit:hover { border-color: #0d9488; color: #0d9488; }
+.action-icon-btn.delete:hover { border-color: #ef4444; color: #ef4444; }
+
+/* Forms & Modal Form Overlay box */
+.modal-form-box {
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 1.5px solid #cbd5e1;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  animation: slideDownForm 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDownForm {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-form-box h4 {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+  color: #0f766e;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn-save {
+  background-color: #0d9488;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13.5px;
+  transition: background 0.15s;
+}
+.btn-save:hover { background-color: #0f766e; }
+
+.btn-cancel {
+  background-color: #fff;
+  border: 1.5px solid #cbd5e1;
+  color: #475569;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13.5px;
+  transition: all 0.15s;
+}
+.btn-cancel:hover { background-color: #f1f5f9; }
+
+/* Prescription medicines items prescription container */
+.med-prescribe-box {
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.med-prescribe-box h5 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: #475569;
+}
+
+.prescribe-inputs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.btn-add-item {
+  background-color: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  color: #0f766e;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 0 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+
+.btn-add-item:hover {
+  background-color: #e2e8f0;
+}
+
+.prescription-items-preview h6 {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #64748b;
+  margin: 0 0 8px 0;
+}
+
+.no-items-alert {
+  font-size: 12.5px;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.preview-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.preview-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.btn-remove-item {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+
+/* Prescription tags in Table */
+.prescription-medicines-cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 250px;
+}
+
+.prescription-med-tag {
+  background-color: #f0fdf4;
+  border: 1px solid #d1fae5;
+  color: #047857;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Prescription action buttons */
+.pres-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: max-content;
+}
+
+.btn-pres-action {
+  border: none;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: #fff;
+  transition: opacity 0.15s;
+}
+
+.btn-pres-action.fill { background-color: #059669; }
+.btn-pres-action.cancel { background-color: #dc2626; }
+.btn-pres-action:hover { opacity: 0.9; }
+
+.completed-text {
+  font-size: 12px;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* User administration layout */
+.role-badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.role-badge.role-1 { background-color: #fef2f2; color: #dc2626; }
+.role-badge.role-2 { background-color: #f1f5f9; color: #475569; }
+.role-badge.role-3 { background-color: #ecfdf5; color: #047857; }
+.role-badge.role-4 { background-color: #eff6ff; color: #1d4ed8; }
+
+.user-status-btn {
+  border: none;
+  padding: 4px 8px;
+  font-size: 11.5px;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.user-status-btn.active { background-color: #d1fae5; color: #065f46; }
+.user-status-btn.blocked { background-color: #fee2e2; color: #b91c1c; }
+
+.role-assign-select {
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Inventory Warehouse design */
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.warehouse-card {
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+}
+
+.wh-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+}
+
+.wh-icon {
+  color: #0d9488;
+}
+
+.wh-header h4 {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0;
+  color: #1e293b;
+}
+
+.wh-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wh-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.wh-stat-num {
+  font-size: 28px;
+  font-weight: 900;
+  color: #0d9488;
+}
+
+.wh-stat-lbl {
+  font-size: 12.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.wh-info {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 12px;
+  color: #475569;
+  background-color: #f0fdf4;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+/* Statistics Báo cáo dashboard */
+.stats-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stats-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-summary-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.card-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-summary-card.revenue .card-icon-wrap { background-color: #ecfdf5; color: #059669; }
+.stat-summary-card.patients .card-icon-wrap { background-color: #eff6ff; color: #2563eb; }
+.stat-summary-card.appointments .card-icon-wrap { background-color: #f5f3ff; color: #7c3aed; }
+.stat-summary-card.warning .card-icon-wrap { background-color: #fff7ed; color: #ea580c; }
+
+.stat-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-val {
+  font-size: 18px;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+.stat-lbl {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.stats-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.stats-detail-card {
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.stats-detail-card h4 {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+  color: #1e293b;
+}
+
+.low-stock-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.low-stock-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  border-bottom: 1px dashed #f1f5f9;
+  padding-bottom: 6px;
+}
+
+.low-stock-row:last-child {
+  border-bottom: none;
+}
+
+.stock-count-alert {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.no-warnings {
+  font-size: 12.5px;
+  color: #64748b;
+  margin: 0;
+}
+
+.clinic-status-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.status-row strong {
+  color: #0f766e;
+}
+
+@media (max-width: 992px) {
+  .stats-summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-detail-grid { grid-template-columns: 1fr; }
+  .inventory-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   PRODUCTS CRUD LAYOUT (Admin)
+   ============================================================ */
+
+.products-crud-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.products-form-panel {
+  position: sticky;
+  top: 24px;
+}
+
+.products-list-panel {
+  min-height: 300px;
+}
+
+.product-img-preview {
+  width: 100%;
+  height: 140px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #94a3b8;
+}
+
+.product-img-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.cancel-edit-btn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e11d48;
+  border-radius: 10px;
+  background: transparent;
+  color: #e11d48;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-edit-btn:hover {
+  background: #e11d48;
+  color: white;
+}
+
+/* Medicine CRUD List */
+.medicine-crud-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.medicine-crud-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+  transition: all 0.2s;
+}
+
+.medicine-crud-row:hover {
+  border-color: #0d9488;
+  background: rgba(13,148,136,0.04);
+}
+
+.medicine-crud-row.editing {
+  border-color: #f59e0b;
+  background: rgba(245,158,11,0.06);
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+}
+
+.medicine-crud-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #e2e8f0;
+}
+
+.medicine-crud-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.medicine-crud-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.medicine-crud-info strong {
+  font-size: 14px;
+  color: #1e293b;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.med-meta {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.med-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0d9488;
+}
+
+.med-stock {
+  font-size: 11.5px;
+  color: #475569;
+}
+
+.med-stock.low {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.medicine-crud-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.med-edit-btn,
+.med-delete-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.med-edit-btn {
+  background: rgba(13,148,136,0.1);
+  color: #0d9488;
+  border-color: #0d9488;
+}
+
+.med-edit-btn:hover {
+  background: #0d9488;
+  color: white;
+}
+
+.med-delete-btn {
+  background: rgba(220,38,38,0.07);
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+.med-delete-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .products-crud-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .products-form-panel {
+    position: static;
+  }
+}
+
+/* ============ ADMIN ORDERS FILTER & RETURN APPROVAL ============ */
+.admin-orders-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.admin-orders-tab {
+  padding: 8px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.admin-orders-tab:hover {
+  background-color: #f1f5f9;
+}
+
+.admin-orders-tab.active {
+  background-color: #0f766e;
+  border-color: #0f766e;
+  color: #fff;
+}
+
+.return-approval-box {
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.return-approval-title {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #92400e;
+}
+
+.return-approval-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border: 1px solid #fef3c7;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.return-approval-row:last-child {
+  margin-bottom: 0;
+}
+
+.return-approval-info {
+  flex: 1;
+  min-width: 240px;
+}
+
+.return-approval-head {
+  font-size: 14px;
+  color: #1e293b;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.return-approval-head span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.return-approval-reason {
+  font-size: 13px;
+  color: #92400e;
+  margin-top: 4px;
+}
+
+.return-approval-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-approve {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #10b981;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-approve:hover {
+  background-color: #059669;
+}
+
+.btn-reject {
+  padding: 8px 14px;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-reject:hover {
+  background-color: #fef2f2;
+}
+
+.order-status-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.status-text {
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.status-text.pending { background-color: #ffedd5; color: #ea580c; }
+.status-text.shipping { background-color: #dbeafe; color: #2563eb; }
+.status-text.delivered { background-color: #d1fae5; color: #059669; }
+.status-text.cancelled { background-color: #f1f5f9; color: #64748b; }
+.status-text.returned { background-color: #ede9fe; color: #7c3aed; }
+.status-text.return-requested { background-color: #fef3c7; color: #d97706; }
+
+.confirm-delivered-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #059669;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.confirm-delivered-btn:hover {
+  background-color: #047857;
+}
+
+.collect-cash-btn {
+  margin-top: 4px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.collect-cash-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.return-reason-cell {
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: #92400e;
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 4px 8px;
+  display: inline-block;
+}
+
+.payment-toggle-btn.refunded { background-color: #ede9fe; color: #7c3aed; }

@@ -1,0 +1,246 @@
+.pharmacy-chat-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 90px;
+  width: 380px;
+  height: 540px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  z-index: 99999;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  animation: slideUpWidget 0.3s ease-out;
+}
+
+@keyframes slideUpWidget {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pharmacy-chat-header {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pharmacist-avatar-wrap {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  background: #10b981;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+.pharmacy-chat-title-wrap {
+  flex: 1;
+}
+
+.pharmacy-chat-title-wrap h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pharmacy-chat-sub {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+.pharmacy-chat-close-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.pharmacy-chat-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pharmacy-chat-notice {
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 12px;
+  padding: 8px 14px;
+  border-bottom: 1px solid #a7f3d0;
+}
+
+.pharmacy-chat-body {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-intro-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #10b981;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #334155;
+}
+
+.chat-intro-card p {
+  margin: 4px 0;
+}
+
+.pharmacy-msg-row {
+  display: flex;
+  flex-direction: column;
+  max-width: 82%;
+}
+
+.pharmacy-msg-row.msg-me {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.pharmacy-msg-row.msg-pharmacist {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.msg-sender-role {
+  font-size: 11px;
+  font-weight: 600;
+  color: #047857;
+  margin-bottom: 3px;
+  margin-left: 4px;
+}
+
+.pharmacy-msg-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.4;
+  position: relative;
+  word-break: break-word;
+}
+
+.msg-me .pharmacy-msg-bubble {
+  background: #059669;
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+}
+
+.msg-pharmacist .pharmacy-msg-bubble {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-bottom-left-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.msg-time {
+  display: block;
+  font-size: 10px;
+  margin-top: 4px;
+  opacity: 0.75;
+  text-align: right;
+}
+
+.pharmacy-system-notice {
+  text-align: center;
+  margin: 8px 0;
+}
+
+.pharmacy-system-notice span {
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 11.5px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+}
+
+.pharmacy-chat-footer {
+  padding: 10px 12px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 8px;
+}
+
+.pharmacy-chat-footer input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  font-size: 13.5px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.pharmacy-chat-footer input:focus {
+  border-color: #059669;
+}
+
+.pharmacy-send-btn {
+  background: #059669;
+  color: #ffffff;
+  border: none;
+  padding: 0 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pharmacy-send-btn:hover:not(:disabled) {
+  background: #047857;
+}
+
+.pharmacy-send-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .pharmacy-chat-widget {
+    right: 8px;
+    left: 8px;
+    bottom: 80px;
+    width: auto;
+    height: 75vh;
+  }
+}

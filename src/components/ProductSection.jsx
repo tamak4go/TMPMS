@@ -50,10 +50,10 @@ const ProductCard = ({ product, onProductClick }) => {
 
       {/* Price */}
       <div className="pc-price-row">
-        <span className="pc-price">{current.price.toLocaleString('vi-VN')}đ</span>
+        <span className="pc-price">{current.price != null ? `${current.price.toLocaleString('vi-VN')}đ` : 'Liên hệ'}</span>
         <span className="pc-unit-label">/{units.length > 1 ? units[selectedUnit].label : product.unit}</span>
       </div>
-      {current.oldPrice && (
+      {current.oldPrice != null && (
         <div className="pc-old-price">{current.oldPrice.toLocaleString('vi-VN')}đ</div>
       )}
 
@@ -61,9 +61,19 @@ const ProductCard = ({ product, onProductClick }) => {
       {product.packaging && <p className="pc-packaging">{product.packaging}</p>}
 
       {/* CTA */}
-      <button className="pc-cta" onClick={() => addToCart({ ...product, price: current.price })}>
-        Chọn mua
-      </button>
+      {product.stockQuantity <= 0 ? (
+        <button
+          className="pc-cta"
+          disabled
+          style={{ background: '#cccccc', color: '#666666', cursor: 'not-allowed', width: '100%', border: 'none', borderRadius: '4px', padding: '8px 12px' }}
+        >
+          Hết hàng
+        </button>
+      ) : (
+        <button className="pc-cta" onClick={() => addToCart({ ...product, price: current.price })}>
+          Chọn mua
+        </button>
+      )}
     </div>
   );
 };

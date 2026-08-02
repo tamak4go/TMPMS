@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Plus, Minus, Trash2, ShoppingBag, MapPin, Truck, Ticket, CreditCard, Landmark, Check } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { X, Plus, Minus, Trash2, ShoppingBag, MapPin, Truck, Ticket, CreditCard } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import * as api from '../services/api';
@@ -32,15 +32,62 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
   const [voucherSuccess, setVoucherSuccess] = useState('');
 
   // Payment states
-  const [paymentMethod, setPaymentMethod] = useState('COD'); // COD, MOMO, ZALOPAY
-  const [showQRModal, setShowQRModal] = useState(false);
-  const [qrCodeVal, setQrCodeVal] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('COD'); // COD, PAYOS
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
+  // Chờ đăng nhập xong để tự động tiếp tục thanh toán (null | 'checkout' | 'submit')
+  const [loginRedirectAction, setLoginRedirectAction] = useState(null);
+
+  const [shippingFee, setShippingFee] = useState(0);
+  const [distance, setDistance] = useState(0);
+
+  useEffect(() => {
+    if (!checkoutMode) return;
+    
+    const calculateFee = async () => {
+      try {
+        const addr = deliveryMode === 'shipping' ? addressDetail : pickupStore;
+        if (deliveryMode === 'shipping' && !addressDetail.trim()) {
+          setShippingFee(0);
+          setDistance(0);
+          return;
+        }
+        const data = await api.calculateShipping(addr, deliveryMode);
+        setShippingFee(data.shippingFee);
+        setDistance(data.distance);
+      } catch (err) {
+        console.error("Error calculating shipping:", err);
+      }
+    };
+
+    const delayDebounce = setTimeout(() => {
+      calculateFee();
+    }, 400);
+
+    return () => clearTimeout(delayDebounce);
+  }, [addressDetail, pickupStore, deliveryMode, checkoutMode]);
+
+  // Sau khi đăng nhập thành công (từ modal login), tự động tiếp tục thanh toán
+  useEffect(() => {
+    if (!loginRedirectAction || !user) return;
+    const action = loginRedirectAction;
+    setTimeout(() => {
+      setLoginRedirectAction(null);
+      setRecipientName(user.username || '');
+      setRecipientPhone(user.phone || '');
+      if (action === 'checkout') {
+        setCheckoutMode(true);
+      }
+    }, 0);
+  }, [loginRedirectAction, user]);
+
   if (!isOpen) return null;
+
+  const rxItems = cartItems.filter(item => item.requiresPrescription);
+  const otcItems = cartItems.filter(item => !item.requiresPrescription);
 
   const totalAmount = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   
@@ -55,19 +102,30 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
       discountAmount = 20000;
     }
   }
-  const finalAmount = Math.max(0, totalAmount - discountAmount);
+  const finalAmount = Math.max(0, totalAmount + shippingFee - discountAmount);
 
   const formatPrice = (price) => {
+    if (price == null) return 'Liên hệ';
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+  };
+
+  // Bắt buộc đăng nhập trước khi thanh toán: mở modal login, sau khi đăng nhập
+  // thành công tự động mở form thanh toán để tiếp tục.
+  const requireLogin = () => {
+    setLoginRedirectAction('checkout');
+    if (onOpenAuth) onOpenAuth();
+    else window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: 'login' }));
   };
 
   const handleCheckoutClick = () => {
     setError('');
-    // Pre-populate user details if logged in
-    if (user) {
-      setRecipientName(user.username || '');
-      setRecipientPhone(user.phone || '');
+    if (!user) {
+      requireLogin();
+      return;
     }
+    // Pre-populate user details if logged in
+    setRecipientName(user.username || '');
+    setRecipientPhone(user.phone || '');
     setCheckoutMode(true);
   };
 
@@ -95,9 +153,13 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
   };
 
   const triggerOrderCreation = async () => {
+    if (!user) {
+      requireLogin();
+      return;
+    }
+
     setLoading(true);
     setError('');
-    setShowQRModal(false);
 
     try {
       // Build composite address depending on delivery mode
@@ -108,14 +170,13 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
         compositeAddress = `[NHẬN TẠI NHÀ THUỐC] Cửa hàng: ${pickupStore} | Người nhận: ${recipientName} | SĐT: ${recipientPhone}`;
       }
 
-      // Guest checkout uses user.id if logged in, otherwise default to 3 (seeded Customer account) to satisfy foreign key constraint
-      const userId = user ? user.id : 3;
-
       const orderPayload = {
-        userId: userId,
+        userId: user.id,
         totalAmount: finalAmount,
         shippingAddress: compositeAddress,
         paymentMethod: paymentMethod,
+        deliveryMethod: deliveryMode === 'shipping' ? 'Giao hàng hỏa tốc (Ship 2 Giờ)' : 'Nhận tại cửa hàng',
+        shippingFee: shippingFee,
         items: cartItems.map(item => ({
           medicineId: item.id,
           quantity: item.quantity,
@@ -123,7 +184,20 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
         }))
       };
 
-      await api.createOrder(orderPayload);
+      const order = await api.createOrder(orderPayload);
+
+      if (paymentMethod === 'PAYOS') {
+        const baseUrl = window.location.origin;
+        const paymentLink = await api.createPayOSPaymentLink(
+          order.id,
+          `${baseUrl}/?payment=success&orderCode=${order.id}`,
+          `${baseUrl}/?payment=cancelled&orderCode=${order.id}`
+        );
+        clearCart();
+        window.location.assign(paymentLink.checkoutUrl);
+        return;
+      }
+
       clearCart();
       setSuccessMsg('Đặt hàng thành công! Đơn hàng của bạn đã được chuyển cho dược sĩ xử lý.');
       setCheckoutMode(false);
@@ -136,7 +210,7 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
       }, 3500);
     } catch (err) {
       console.error(err);
-      setError('Không thể tạo đơn hàng. Vui lòng kiểm tra lại kết nối!');
+      setError(err.message || 'Không thể tạo đơn hàng. Vui lòng kiểm tra lại kết nối!');
     } finally {
       setLoading(false);
     }
@@ -153,14 +227,7 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
       return;
     }
 
-    if (paymentMethod === 'MOMO' || paymentMethod === 'ZALOPAY') {
-      // Trigger QR code modal before saving
-      const txnCode = 'LC' + Date.now().toString().slice(-6);
-      setQrCodeVal(txnCode);
-      setShowQRModal(true);
-    } else {
-      triggerOrderCreation();
-    }
+    triggerOrderCreation();
   };
 
   return (
@@ -202,7 +269,7 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
                   onClick={() => setDeliveryMode('shipping')}
                 >
                   <Truck size={16} />
-                  <span>Giao hàng tận nơi</span>
+                  <span>Giao hàng hỏa tốc (Ship 2 Giờ)</span>
                 </button>
                 <button 
                   type="button" 
@@ -210,7 +277,7 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
                   onClick={() => setDeliveryMode('pickup')}
                 >
                   <MapPin size={16} />
-                  <span>Nhận tại nhà thuốc</span>
+                  <span>Nhận tại cửa hàng</span>
                 </button>
               </div>
               
@@ -274,7 +341,7 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
                 <div className="voucher-input-wrap">
                   <input 
                     type="text" 
-                    placeholder="Nhập mã (THAIMINH50, LONGCHAU10, FREESHIP)" 
+                    placeholder="Nhập mã (THAIMINH50, LONGCHAU10, FREESHIP)"
                     value={voucherCode}
                     onChange={(e) => setVoucherCode(e.target.value)}
                   />
@@ -302,31 +369,17 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
                     </div>
                   </label>
                   
-                  <label className={`payment-option-card ${paymentMethod === 'MOMO' ? 'active' : ''}`}>
+                  <label className={`payment-option-card ${paymentMethod === 'PAYOS' ? 'active' : ''}`}>
                     <input 
                       type="radio" 
                       name="payment_method" 
-                      value="MOMO"
-                      checked={paymentMethod === 'MOMO'}
-                      onChange={() => setPaymentMethod('MOMO')} 
+                      value="PAYOS"
+                      checked={paymentMethod === 'PAYOS'}
+                      onChange={() => setPaymentMethod('PAYOS')}
                     />
                     <div>
-                      <span className="option-title">Ví điện tử MoMo (Quét QR)</span>
-                      <span className="option-desc">Thanh toán chuyển khoản qua MoMo.</span>
-                    </div>
-                  </label>
-
-                  <label className={`payment-option-card ${paymentMethod === 'ZALOPAY' ? 'active' : ''}`}>
-                    <input 
-                      type="radio" 
-                      name="payment_method" 
-                      value="ZALOPAY"
-                      checked={paymentMethod === 'ZALOPAY'}
-                      onChange={() => setPaymentMethod('ZALOPAY')} 
-                    />
-                    <div>
-                      <span className="option-title">Ví điện tử ZaloPay (Quét QR)</span>
-                      <span className="option-desc">Thanh toán chuyển khoản qua ZaloPay.</span>
+                      <span className="option-title">Thanh toán online qua PayOS</span>
+                      <span className="option-desc">Quét VietQR hoặc thanh toán trên trang bảo mật của PayOS.</span>
                     </div>
                   </label>
                 </div>
@@ -338,6 +391,12 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
                   <span>Tổng tiền hàng:</span>
                   <span>{formatPrice(totalAmount)}</span>
                 </div>
+                {deliveryMode === 'shipping' && (
+                  <div className="price-calc-row animate-fade-in">
+                    <span>Phí vận chuyển ({distance}km):</span>
+                    <span>{shippingFee > 0 ? formatPrice(shippingFee) : 'Đang tính...'}</span>
+                  </div>
+                )}
                 {discountAmount > 0 && (
                   <div className="price-calc-row discount animate-fade-in">
                     <span>Giảm giá Voucher:</span>
@@ -372,9 +431,9 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
             /* Cart List */
             <div className="cart-items-list">
               {error && <div className="checkout-error">{error}</div>}
-              {cartItems.map((item) => (
+              {otcItems.map((item) => (
                 <div key={item.id} className="cart-item-card">
-                  <img src={item.imageUrl || 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=100&h=100&fit=crop'} alt={item.name} className="cart-item-img" />
+                  <img src={api.formatImageUrl(item.imageUrl)} alt={item.name} className="cart-item-img" onError={(e) => { e.target.onerror = null; e.target.src = api.FALLBACK_MED_IMG; }} />
                   <div className="cart-item-info">
                     <span className="cart-item-name">{item.name}</span>
                     <span className="cart-item-price">{formatPrice(item.price)}</span>
@@ -395,6 +454,46 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
                   </div>
                 </div>
               ))}
+
+              {rxItems.length > 0 && (
+                <div className="cart-rx-group">
+                  <div className="cart-rx-group-header">
+                    <span className="cart-rx-badge">💊 Thuốc kê đơn</span>
+                    <span className="cart-rx-note">Số lượng giới hạn theo đơn thuốc đã duyệt</span>
+                  </div>
+                  {rxItems.map((item) => {
+                    const atLimit = item.allowedQuantity != null && item.quantity >= item.allowedQuantity;
+                    return (
+                      <div key={item.id} className="cart-item-card">
+                        <img src={api.formatImageUrl(item.imageUrl)} alt={item.name} className="cart-item-img" onError={(e) => { e.target.onerror = null; e.target.src = api.FALLBACK_MED_IMG; }} />
+                        <div className="cart-item-info">
+                          <span className="cart-item-name">{item.name}</span>
+                          <span className="cart-item-price">{formatPrice(item.price)}</span>
+                          <div className="cart-item-actions">
+                            <div className="quantity-controls">
+                              <button className="qty-btn" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+                                <Minus size={12} />
+                              </button>
+                              <span className="qty-val">{item.quantity}</span>
+                              <button
+                                className="qty-btn"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                disabled={atLimit}
+                                title={atLimit ? 'Đã đạt liều lượng tối đa trong đơn thuốc' : 'Tăng số lượng'}
+                              >
+                                <Plus size={12} />
+                              </button>
+                            </div>
+                            <button className="item-delete-btn" onClick={() => removeFromCart(item.id)} title="Xóa khỏi giỏ hàng">
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -413,71 +512,6 @@ const CartDrawer = ({ isOpen, onClose, onOpenAuth }) => {
         )}
       </div>
 
-      {/* MoMo / ZaloPay QR Scan Mock Modal Popup */}
-      {showQRModal && (
-        <div className="qr-pay-modal-overlay" onClick={() => setShowQRModal(false)}>
-          <div className="qr-pay-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="qr-modal-header">
-              <Landmark size={20} />
-              <h4>Quét Mã QR Thanh Toán Trực Tuyến</h4>
-              <button className="qr-close-btn" onClick={() => setShowQRModal(false)}><X size={18} /></button>
-            </div>
-            <div className="qr-modal-body">
-              <div className="qr-brand-badge">
-                <span className={`brand-logo ${paymentMethod.toLowerCase()}`}>{paymentMethod}</span>
-              </div>
-              
-              <div className="qr-image-wrapper">
-                {/* SVG mock of a high-fidelity QR Code */}
-                <svg width="180" height="180" viewBox="0 0 100 100" className="qr-svg-code">
-                  <path d="M 0 0 L 0 30 L 10 30 L 10 10 L 30 10 L 30 0 Z" fill="#000" />
-                  <path d="M 70 0 L 70 10 L 90 10 L 90 30 L 100 30 L 100 0 Z" fill="#000" />
-                  <path d="M 0 70 L 0 100 L 30 100 L 30 90 L 10 90 L 10 70 Z" fill="#000" />
-                  <path d="M 70 100 L 100 100 L 100 70 L 90 70 L 90 90 L 70 90 Z" fill="#000" />
-                  <rect x="15" y="15" width="15" height="15" fill="#000" />
-                  <rect x="70" y="15" width="15" height="15" fill="#000" />
-                  <rect x="15" y="70" width="15" height="15" fill="#000" />
-                  {/* Scatter matrix */}
-                  <rect x="40" y="10" width="8" height="8" fill="#000" />
-                  <rect x="52" y="25" width="6" height="6" fill="#000" />
-                  <rect x="45" y="45" width="10" height="10" fill="#000" />
-                  <rect x="75" y="45" width="8" height="8" fill="#000" />
-                  <rect x="10" y="45" width="8" height="8" fill="#000" />
-                  <rect x="45" y="75" width="8" height="8" fill="#000" />
-                  <rect x="68" y="72" width="6" height="6" fill="#000" />
-                </svg>
-                <div className="qr-center-logo">{paymentMethod === 'MOMO' ? 'MoMo' : 'Zalo'}</div>
-              </div>
-
-              <div className="qr-details-table">
-                <div className="qr-det-row">
-                  <span>Chủ tài khoản:</span>
-                  <strong>CÔNG TY CP DƯỢC PHẨM FPT LONG CHÂU</strong>
-                </div>
-                <div className="qr-det-row">
-                  <span>Số tiền:</span>
-                  <strong className="qr-amount-text">{formatPrice(finalAmount)}</strong>
-                </div>
-                <div className="qr-det-row">
-                  <span>Nội dung chuyển khoản:</span>
-                  <strong className="qr-code-highlight">{qrCodeVal}</strong>
-                </div>
-              </div>
-
-              <div className="qr-instruction-alert">
-                <span>⚠️ Quý khách vui lòng quét mã đúng số tiền và điền chính xác nội dung chuyển khoản để đơn hàng tự động duyệt lập tức.</span>
-              </div>
-            </div>
-            <div className="qr-modal-footer">
-              <button className="qr-cancel-btn" onClick={() => setShowQRModal(false)}>Hủy giao dịch</button>
-              <button className="qr-confirm-btn" onClick={triggerOrderCreation}>
-                <Check size={16} />
-                <span>Tôi đã chuyển khoản thành công</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

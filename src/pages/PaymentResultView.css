@@ -1,0 +1,184 @@
+.payment-result-page {
+  --result-accent: #1d4ed8;
+  --result-soft: #eff6ff;
+  --result-border: #bfdbfe;
+  min-height: 68dvh;
+  display: grid;
+  place-items: center;
+  padding: 54px 20px 72px;
+}
+
+.payment-result-page--success {
+  --result-accent: #0f766e;
+  --result-soft: #ecfdf5;
+  --result-border: #a7f3d0;
+}
+
+.payment-result-page--failed {
+  --result-accent: #b91c1c;
+  --result-soft: #fef2f2;
+  --result-border: #fecaca;
+}
+
+.payment-result-page--pending {
+  --result-accent: #b45309;
+  --result-soft: #fffbeb;
+  --result-border: #fde68a;
+}
+
+.payment-result-shell {
+  width: min(680px, 100%);
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 44px;
+  box-shadow: 0 24px 70px rgba(15, 118, 110, 0.1);
+}
+
+.payment-result-status {
+  text-align: center;
+}
+
+.payment-result-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+  display: grid;
+  place-items: center;
+  color: var(--result-accent);
+  background: var(--result-soft);
+  border: 1px solid var(--result-border);
+  border-radius: 18px;
+}
+
+.payment-result-icon.is-loading svg {
+  animation: payment-result-spin 1s linear infinite;
+}
+
+.payment-result-label {
+  color: var(--result-accent);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.payment-result-status h1 {
+  margin: 8px 0 10px;
+  color: #0f172a;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.payment-result-status p {
+  max-width: 520px;
+  margin: 0 auto;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.payment-result-order {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 32px 0;
+  overflow: hidden;
+  background: #e2e8f0;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.payment-result-order > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  background: #f8fafc;
+}
+
+.payment-result-order span {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.payment-result-order strong {
+  color: #0f172a;
+  font-size: 17px;
+}
+
+.payment-result-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.payment-result-btn {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+
+.payment-result-btn:active {
+  transform: scale(0.98);
+}
+
+.payment-result-btn--primary {
+  color: #f8fafc;
+  background: var(--result-accent);
+}
+
+.payment-result-btn--secondary {
+  color: #334155;
+  background: #fff;
+  border-color: #cbd5e1;
+}
+
+.payment-result-btn--secondary:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.payment-result-help {
+  margin: 22px 0 0;
+  color: #64748b;
+  font-size: 12.5px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+@keyframes payment-result-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-color-scheme: dark) {
+  .payment-result-shell { background: #111827; border-color: #334155; box-shadow: none; }
+  .payment-result-status h1, .payment-result-order strong { color: #f1f5f9; }
+  .payment-result-status p, .payment-result-help { color: #cbd5e1; }
+  .payment-result-order { background: #334155; border-color: #334155; }
+  .payment-result-order > div { background: #1e293b; }
+  .payment-result-order span { color: #94a3b8; }
+  .payment-result-btn--secondary { color: #e2e8f0; background: #1e293b; border-color: #475569; }
+  .payment-result-btn--secondary:hover { background: #334155; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .payment-result-icon.is-loading svg { animation: none; }
+  .payment-result-btn { transition: none; }
+}
+
+@media (max-width: 640px) {
+  .payment-result-page { min-height: 62dvh; padding: 28px 14px 48px; }
+  .payment-result-shell { padding: 30px 20px; border-radius: 16px; }
+  .payment-result-order, .payment-result-actions { grid-template-columns: 1fr; }
+}

@@ -20,22 +20,19 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    const onAuthExpired = () => {
+      setUser(null);
+    };
+    window.addEventListener('auth:expired', onAuthExpired);
+    return () => window.removeEventListener('auth:expired', onAuthExpired);
+  }, []);
+
   const login = async (username, password) => {
     const data = await api.loginUser(username, password);
     setUser(data);
     localStorage.setItem('user', JSON.stringify(data));
     return data;
-  };
-
-  const loginByOtp = async (phone, code) => {
-    const data = await api.loginUserByOtp(phone, code);
-    setUser(data);
-    localStorage.setItem('user', JSON.stringify(data));
-    return data;
-  };
-
-  const sendOtp = async (phone) => {
-    await api.sendOtp(phone);
   };
 
   const register = async (username, email, password, phone) => {
@@ -49,7 +46,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, loginByOtp, sendOtp, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

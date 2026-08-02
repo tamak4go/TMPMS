@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchMedicines } from '../services/api';
-import ProductCard from './ProductCard';
+import ProductCard from './ui/ProductCard';
 import { Leaf, ChevronRight, Sparkles } from 'lucide-react';
 import './DongYSection.css';
 
@@ -16,6 +16,7 @@ const mapProduct = (p) => ({
   packaging: p.packaging || '',
   description: p.description,
   requiresPrescription: p.requires_prescription !== undefined ? p.requires_prescription : p.requiresPrescription,
+  stockQuantity: p.stockQuantity !== undefined ? p.stockQuantity : (p.stock_quantity !== undefined ? p.stock_quantity : 99),
 });
 
 const BENEFITS = [
@@ -25,7 +26,7 @@ const BENEFITS = [
   { icon: '💚', title: 'An toàn toàn diện', desc: 'Không tác dụng phụ' },
 ];
 
-const DongYSection = () => {
+const DongYSection = ({ onProductClick }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('all');
@@ -119,7 +120,7 @@ const DongYSection = () => {
           <div className="ds-grid">
             {products.map(product => (
               <div key={product.id} className="ds-grid-item">
-                <ProductCard product={product} />
+                <ProductCard product={product} onProductClick={onProductClick} />
               </div>
             ))}
           </div>

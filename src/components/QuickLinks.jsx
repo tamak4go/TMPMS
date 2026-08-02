@@ -8,6 +8,7 @@ const QuickLinks = ({ onNavigate }) => {
     { icon: '📋', label: 'Đơn của tôi', color: '#fff3e0', action: () => onNavigate && onNavigate('history') },
     { icon: '🏪', label: 'Tìm nhà thuốc', color: '#fce4ec', action: () => onNavigate && onNavigate('store-finder') },
     { icon: '💉', label: 'Tiêm chủng', color: '#e0f2f1', action: () => onNavigate && onNavigate('vaccine') },
+    { icon: '📑', label: 'Kiểm tra sức khỏe', color: '#ede7f6', action: () => onNavigate && onNavigate('health-quiz') },
     { icon: '🎥', label: 'Video sức khỏe', color: '#e0f7fa', action: () => onNavigate && onNavigate('reels') },
   ];
 

@@ -11,13 +11,18 @@
     "start": "node server.cjs"
   },
   "dependencies": {
+    "@microsoft/signalr": "^10.0.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "firebase": "^12.16.0",
+    "leaflet": "^1.9.4",
     "lucide-react": "^1.16.0",
     "pg": "^8.22.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-leaflet": "^5.0.0",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
     "swiper": "^12.1.4"
   },
   "devDependencies": {

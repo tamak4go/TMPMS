@@ -1,0 +1,385 @@
+/* Modal backdrop */
+.tracking-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+/* Card */
+.tracking-modal-card {
+  background-color: #ffffff;
+  width: 1100px;
+  max-width: 100%;
+  height: 680px;
+  border-radius: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+/* Header */
+.tracking-modal-header {
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #0f766e, #0d9488);
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-title h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.connection-badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 4px;
+  opacity: 0.95;
+}
+.connection-badge.online {
+  color: #4ade80;
+}
+.connection-badge.offline {
+  color: #f87171;
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* Body layout */
+.tracking-modal-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Map Column */
+.map-wrapper {
+  flex: 1.6;
+  position: relative;
+  height: 100%;
+}
+
+.leaflet-map-container {
+  width: 100%;
+  height: 100%;
+  background-color: #f8fafc;
+}
+
+.realtime-status-pill {
+  position: absolute;
+  top: 15px;
+  left: 55px;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e2e8f0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.pulse-circle {
+  width: 8px;
+  height: 8px;
+  background-color: #2563eb;
+  border-radius: 50%;
+  animation: pulse-ring 1.5s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(37, 99, 235, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
+}
+
+/* Marker emoji wrappers */
+.map-marker-emoji {
+  font-size: 26px;
+  text-align: center;
+  line-height: 36px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+.map-marker-shipper-emoji {
+  font-size: 32px;
+  text-align: center;
+  line-height: 42px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+  animation: float-marker 2s ease-in-out infinite;
+}
+
+@keyframes float-marker {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Side info panel */
+.tracking-info-panel {
+  flex: 1;
+  background-color: #f8fafc;
+  border-left: 1px solid #e2e8f0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.tracking-info-panel h4 {
+  font-size: 13.5px;
+  font-weight: 750;
+  color: #0f766e;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  letter-spacing: 0.3px;
+  border-left: 3px solid #0f766e;
+  padding-left: 8px;
+}
+
+/* Cards */
+.stepper-card, .shipper-card, .controls-card, .webhook-dev-card {
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+/* Stepper UI */
+.delivery-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 75px;
+}
+
+.node-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.step-node span {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+}
+
+.step-bar {
+  flex: 1;
+  height: 3px;
+  background-color: #cbd5e1;
+  margin-bottom: 22px; /* align center with node circles */
+}
+
+/* Stepper Active/Done Classes */
+.step-node.step-done .node-icon {
+  background-color: #f0fdf4;
+  border-color: #10b981;
+  color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+.step-node.step-done span {
+  color: #10b981;
+}
+
+.step-node.step-active .node-icon {
+  background-color: #eff6ff;
+  border-color: #3b82f6;
+  color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  animation: border-glow 1.5s infinite;
+}
+.step-node.step-active span {
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+.step-bar.active {
+  background-color: #10b981;
+}
+
+@keyframes border-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); }
+}
+
+/* Shipper Card */
+.shipper-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.shipper-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.shipper-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.shipper-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.shipper-plate {
+  font-size: 12.5px;
+  color: #64748b;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.shipper-phone-link {
+  font-size: 12.5px;
+  color: #0f766e;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  margin-top: 2px;
+}
+.shipper-phone-link:hover {
+  text-decoration: underline;
+}
+
+/* Controls */
+.controls-card p {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.4;
+  margin: 0 0 12px 0;
+}
+
+.restart-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #0f766e;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 650;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.restart-btn:hover {
+  background-color: #0d9488;
+}
+
+/* Webhook Developer Guide Card */
+.webhook-dev-card {
+  background-color: #faf5ff;
+  border-color: #e9d5ff;
+}
+
+.webhook-dev-card h5 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 750;
+  color: #7e22ce;
+}
+
+.dev-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #7e22ce;
+  margin-bottom: 8px;
+}
+
+.webhook-dev-card p {
+  font-size: 11.5px;
+  color: #6b21a8;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.dev-code {
+  background-color: #1e293b;
+  color: #f8fafc;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-family: Consolas, Monaco, monospace;
+  overflow-x: auto;
+  margin: 0;
+  line-height: 1.35;
+}

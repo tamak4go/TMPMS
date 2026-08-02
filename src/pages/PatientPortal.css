@@ -1,0 +1,546 @@
+/* ============================================================
+   PATIENT PORTAL STYLES (Trang Sức Khỏe Bệnh Nhân)
+   ============================================================ */
+
+.patient-portal-container {
+  max-width: 1100px;
+  margin: 32px auto;
+  padding: 0 16px;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1e293b;
+}
+
+/* Welcome Banner */
+.portal-welcome-banner {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  border-radius: 20px;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(13,148,136,0.15);
+  margin-bottom: 24px;
+}
+
+.user-avatar-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.welcome-text h2 {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.5px;
+}
+
+.welcome-text p {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+}
+
+.back-home-btn-header {
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.back-home-btn-header:hover {
+  background-color: #fff;
+  color: #0f766e;
+  border-color: #fff;
+}
+
+/* Tabs Navigation */
+.portal-tabs-nav {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1.5px solid #e2e8f0;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.portal-tab-item {
+  background: none;
+  border: none;
+  color: #64748b;
+  padding: 8px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.portal-tab-item:hover {
+  background-color: #f1f5f9;
+  color: #0d9488;
+}
+
+.portal-tab-item.active {
+  background-color: rgba(13,148,136,0.08);
+  color: #0f766e;
+}
+
+/* Dashboard Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+}
+
+.portal-card {
+  background-color: #fff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.portal-card h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+}
+
+.portal-card .card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+}
+
+.portal-card .card-header .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.portal-card .card-header .icon.teal { color: #0d9488; }
+.portal-card .card-header .icon.purple { color: #7c3aed; }
+
+/* Detail row fields */
+.record-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13.5px;
+  border-bottom: 1px dashed #f1f5f9;
+  padding-bottom: 8px;
+}
+
+.detail-row span {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.medical-notes-box {
+  margin-top: 16px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  padding: 14px;
+  border-left: 4px solid #0d9488;
+}
+
+.medical-notes-box h5 {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #475569;
+}
+
+.medical-notes-box p {
+  font-size: 13px;
+  color: #334155;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Empty Record layout */
+.no-record-box {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.no-record-box p {
+  font-size: 13.5px;
+  color: #475569;
+  margin: 0 0 10px 0;
+}
+
+.no-record-box p.sub {
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+/* Right summary column components */
+.right-summary-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.quick-stats-row {
+  display: flex;
+  gap: 12px;
+}
+
+.stat-box {
+  flex: 1;
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+}
+
+.stat-box .num {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0d9488;
+}
+
+.stat-box .lbl {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Next appointment block */
+.appt-alert-box {
+  background-color: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.appt-alert-box .time {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #6d28d9;
+  margin-bottom: 6px;
+}
+
+.appt-alert-box .doctor {
+  font-size: 13px;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+.appt-alert-box .reason {
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+/* Patient appointments rows list */
+.card-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.book-new-appt-btn {
+  background-color: #0d9488;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 18px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+
+.book-new-appt-btn:hover { background-color: #0f766e; }
+
+.appointments-list-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.appt-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 20px;
+  gap: 16px;
+  transition: border-color 0.2s;
+}
+
+.appt-item-row:hover { border-color: #cbd5e1; }
+
+.date-time-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f766e;
+  white-space: nowrap;
+}
+
+.reason-info {
+  flex: 1;
+  font-size: 13px;
+}
+
+.notes-para {
+  font-size: 12px;
+  color: #64748b;
+  margin: 4px 0 0 0;
+  background-color: #fff7ed;
+  border: 1px solid #fed7aa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.status-badge-portal {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.status-badge-portal.scheduled { background-color: #eff6ff; color: #1d4ed8; }
+.status-badge-portal.completed { background-color: #ecfdf5; color: #047857; }
+.status-badge-portal.cancelled { background-color: #fef2f2; color: #b91c1c; }
+
+.status-badge-portal.pending { background-color: #eff6ff; color: #1d4ed8; }
+.status-badge-portal.approved { background-color: #fff7ed; color: #c2410c; }
+.status-badge-portal.fulfilled { background-color: #ecfdf5; color: #047857; }
+.status-badge-portal.rejected { background-color: #fef2f2; color: #b91c1c; }
+
+/* Prescriptions list cards */
+.prescriptions-grid-portal {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.prescription-card-portal {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #fff;
+  transition: all 0.22s ease;
+}
+
+.prescription-card-portal:hover {
+  border-color: #a7f3d0;
+  box-shadow: 0 4px 15px rgba(13,148,136,0.04);
+}
+
+.pres-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1.5px solid #f1f5f9;
+  padding-bottom: 12px;
+}
+
+.pres-card-header h5 {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #0f766e;
+  margin: 0 0 3px 0;
+}
+
+.pres-card-header .date {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.clinic-details {
+  font-size: 12.5px;
+  color: #475569;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.items-list-portal {
+  margin-top: 14px;
+  background-color: #f8fafc;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px dashed #e2e8f0;
+}
+
+.items-list-portal h6 {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #64748b;
+  margin: 0 0 6px 0;
+}
+
+.item-row-detail {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+  padding: 4px 0;
+}
+
+.item-row-detail:last-child {
+  border-bottom: none;
+}
+
+.presc-add-cart-btn {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #0f766e;
+  background-color: #ccfbf1;
+  color: #115e59;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.presc-add-cart-btn:hover:not(:disabled) {
+  background-color: #0f766e;
+  color: #fff;
+}
+
+.presc-add-cart-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  border-color: #94a3b8;
+  background-color: #e2e8f0;
+  color: #64748b;
+}
+
+.presc-cart-notice {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #047857;
+}
+
+/* Loader */
+.portal-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.portal-loader .spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f1f5f9;
+  border-top-color: #0d9488;
+  border-radius: 50%;
+  animation: spinPortal 0.8s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spinPortal {
+  to { transform: rotate(360deg); }
+}
+
+/* Login requirement box */
+.login-required-box {
+  text-align: center;
+  background-color: #fff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  padding: 48px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+
+.warn-icon {
+  color: #f59e0b;
+  margin-bottom: 16px;
+}
+
+.login-required-box h3 {
+  font-size: 18px;
+  font-weight: 850;
+  margin: 0 0 8px 0;
+}
+
+.login-required-box p {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0 0 24px 0;
+}
+
+.back-home-btn {
+  background-color: #475569;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.back-home-btn:hover { background-color: #334155; }
+
+@media (max-width: 850px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .prescriptions-grid-portal { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .appt-item-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .portal-welcome-banner { flex-direction: column; text-align: center; }
+  .back-home-btn-header { margin: 10px auto 0 auto; }
+}
